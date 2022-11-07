@@ -6,6 +6,7 @@ import MUIRemoveSongModal from './MUIRemoveSongModal'
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import { GlobalStoreContext } from '../store/index.js'
+import AuthContext from '../auth/index.js'
 /*
     This React component lets us edit a loaded list, which only
     happens when we are on the proper route.
@@ -13,6 +14,7 @@ import { GlobalStoreContext } from '../store/index.js'
     @author McKilla Gorilla
 */
 function WorkspaceScreen() {
+    const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
     
@@ -23,8 +25,32 @@ function WorkspaceScreen() {
     else if (store.isRemoveSongModalOpen()) {
         modalJSX = <MUIRemoveSongModal />;
     }
+
+    // if (store.currentList) {
+    //     if (auth.user) {
+    //         if (!auth.user.email || !store.currentList.ownerEmail) {
+    //             store.history.push("/");
+    //             store.currentList = null;
+    //             return <div></div>;
+    //         }
+    //         if (auth.user.email !== !store.currentList.ownerEmail) {
+    //             store.history.push("/");
+    //             store.currentList = null;
+    //             return <div></div>;
+    //         }
+    //     }
+    //     else {
+    //         store.history.push("/");
+    //         store.currentList = null;
+    //         return <div></div>;
+    //     }
+    // } else {
+    //     store.history.push("/");
+    //     return <div></div>;
+    // }
+
     return (
-        <Box>
+        <Box sx={{height: '100%', overflow: 'scroll', bgcolor: 'background.paper'}}>
         <List 
             id="playlist-cards" 
             sx={{ width: '100%', bgcolor: 'background.paper' }}
