@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import jsTPS from '../common/jsTPS'
 import api from './store-request-api'
@@ -61,6 +61,13 @@ function GlobalStoreContextProvider(props) {
     const history = useHistory();
 
     console.log("inside useGlobalStore");
+
+    useEffect(() => {
+        let id = history.location.pathname.split("playlist/");
+        if(id.length > 1) {
+            store.setCurrentList(id[1]); 
+        } 
+    }, [])
 
     // SINCE WE'VE WRAPPED THE STORE IN THE AUTH CONTEXT WE CAN ACCESS THE USER HERE
     const { auth } = useContext(AuthContext);
@@ -518,6 +525,20 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
             payload: null
         });
+    }
+
+    store.showRemoveSongModal = (index, song) => {
+        storeReducer({
+            type: GlobalStoreActionType.REMOVE_SONG,
+            payload: {
+                currentSongIndex: index,
+                currentSong: song,
+            }
+        })
+    }
+
+    store.clearAllTransactions = function () {
+        tps.clearAllTransactions();
     }
 
     return (

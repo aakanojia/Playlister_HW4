@@ -17,6 +17,7 @@ function WorkspaceScreen() {
     const { auth } = useContext(AuthContext);
     const { store } = useContext(GlobalStoreContext);
     store.history = useHistory();
+    let page;
     
     let modalJSX = "";
     if (store.isEditSongModalOpen()) {
@@ -25,35 +26,12 @@ function WorkspaceScreen() {
     else if (store.isRemoveSongModalOpen()) {
         modalJSX = <MUIRemoveSongModal />;
     }
-
-    // if (store.currentList) {
-    //     if (auth.user) {
-    //         if (!auth.user.email || !store.currentList.ownerEmail) {
-    //             store.history.push("/");
-    //             store.currentList = null;
-    //             return <div></div>;
-    //         }
-    //         if (auth.user.email !== !store.currentList.ownerEmail) {
-    //             store.history.push("/");
-    //             store.currentList = null;
-    //             return <div></div>;
-    //         }
-    //     }
-    //     else {
-    //         store.history.push("/");
-    //         store.currentList = null;
-    //         return <div></div>;
-    //     }
-    // } else {
-    //     store.history.push("/");
-    //     return <div></div>;
-    // }
-
-    return (
-        <Box sx={{height: '100%', overflow: 'scroll', bgcolor: 'background.paper'}}>
+    if(store.currentList) {
+        page = 
+        <Box>
         <List 
             id="playlist-cards" 
-            sx={{ width: '100%', bgcolor: 'background.paper' }}
+            sx={{ left: '2.5%', height: '100%', width: '95%', bgcolor: '#eeeeedd'  }}
         >
             {
                 store.currentList.songs.map((song, index) => (
@@ -68,6 +46,11 @@ function WorkspaceScreen() {
          </List>            
          { modalJSX }
          </Box>
+    } else {
+        page =<div></div>
+    }
+    return (
+        page
     )
 }
 

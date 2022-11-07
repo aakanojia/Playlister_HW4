@@ -3,6 +3,7 @@ import GlobalStoreContext from '../store';
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import { Button, Typography } from '@mui/material'
 
 const style = {
     position: 'absolute',
@@ -27,10 +28,6 @@ export default function MUIRemoveSongModal() {
         store.hideModals();
     }
     
-    let modalClass = "modal";
-    if (store.isRemoveSongModalOpen()) {
-        modalClass += " is-visible";
-    }
     let songTitle = "";
     if (store.currentSong) {
         songTitle = store.currentSong.title;
@@ -41,34 +38,31 @@ export default function MUIRemoveSongModal() {
             open={store.listMarkedForDeletion !== null}
         >
             <Box sx={style}>
-            <div
-        id="remove-song-modal"
-        className={modalClass}
-        data-animation="slideInOutLeft">
-        <div className="modal-root" id='verify-remove-song-root'>
-            <div className="modal-north">
-                Remove {songTitle}?
-            </div>
-            <div className="modal-center">
-                <div className="modal-center-content">
-                    Are you sure you wish to permanently remove {songTitle} from the playlist?
-                </div>
-            </div>
-            <div className="modal-south">
-                <input type="button" 
-                    id="remove-song-confirm-button" 
-                    className="modal-button" 
-                    onClick={handleConfirmRemoveSong} 
-                    value='Confirm' />
-                <input 
-                    type="button" 
-                    id="remove-song-cancel-button" 
-                    className="modal-button" 
-                    onClick={handleCancelRemoveSong} 
-                    value='Cancel' />
-            </div>
-        </div>
-    </div>
+                <Box>
+                    <Typography variant='h4'>
+                        Remove <b>{songTitle}</b>?
+                    </Typography>
+                </Box>
+                <hr></hr>
+                <Box>
+                    <Typography variant='h5'>
+                    Are you sure you wish to permanently remove <span>{songTitle}</span> from the playlist?
+                    </Typography>
+                </Box>
+                <Box height={'30px'}></Box>
+                <Box>
+                    <Button
+                        variant='contained'
+                        color='error'
+                        sx={{fontSize: '18px'}}
+                        onClick={handleConfirmRemoveSong}
+                    >Confirm</Button>
+                    <Button
+                        variant='contained'
+                        sx={{float: 'right', fontSize: '18px'}}
+                        onClick={handleCancelRemoveSong}
+                    >Cancel</Button>
+                </Box>
             </Box>
         </Modal>
     );

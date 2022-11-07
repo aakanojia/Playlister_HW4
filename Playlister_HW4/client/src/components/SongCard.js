@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
-import { IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, IconButton } from '@mui/material';
+import Delete from '@mui/icons-material/Delete';
 
 function SongCard(props) {
     const { store } = useContext(GlobalStoreContext);
@@ -67,12 +67,12 @@ function SongCard(props) {
                 {song.title} by {song.artist}
             </a>
             <IconButton
-                type="button"
                 id={"remove-song-" + index}
-                className="list-card-button"
-                value={"\u2715"}
+                sx={{float: 'right', padding: 0}}
+                color='error'
+                size='large'
                 onClick={handleRemoveSong}>
-                <DeleteIcon style={{fontSize: '14pt', color: 'white'}} />
+                <Delete fontSize='large' />
             </IconButton>
         </div>
     );
